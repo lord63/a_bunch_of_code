@@ -1,6 +1,6 @@
 ## **A_Bunch_of_Code**
 
-A bunch of code that I wrote before, just for backup.
+A bunch of code that I wrote before or I got from somewhere, just for backup.
 
 ---
 
@@ -23,3 +23,11 @@ A bunch of code that I wrote before, just for backup.
 *  [2](http://www.v2ex.com/t/80927)
 
 *  [3](http://www.v2ex.com/t/68549)
+
+---
+
+### **M.bmp**
+
+功能： 运行它后将在当前文件夹中产生一张有复杂花纹的图片。
+
+来源： [摸我](https://gist.github.com/wenLiangcan/4110576)
