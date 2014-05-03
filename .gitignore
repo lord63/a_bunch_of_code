@@ -1,0 +1,4 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+v2ex_config.py
