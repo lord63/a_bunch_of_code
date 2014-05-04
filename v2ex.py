@@ -30,8 +30,13 @@ def get_money(mission_url):
 
     raw_once = tree.xpath('//input[@type="button"]/@onclick')[0]
     once = raw_once.split('=', 1)[1].replace(';', '').replace("'", '').strip()
-    print 'https://www.v2ex.com' + once
-    s.get('https://www.v2ex.com'+ once, verify=False)
+    url = 'https://www.v2ex.com' + once
+    if once == '/balance':
+        print "You have completed the mission today."
+        return
+    else:
+        s.get(url, verify=False)
+        get_balance(balance_url)
 
 
 def get_balance(balance_url):
@@ -39,7 +44,8 @@ def get_balance(balance_url):
     tree = html.fromstring(r.text)
     total = tree.xpath('//table[@class="data"]/tr[2]/td[4]/text()')[0]
     today = tree.xpath('//table[@class="data"]/tr[2]/td[5]/span/text()')[0]
-    print total, today
+    print "Today: " + today
+    print "Total: " + total
 
 
 s = requests.session()
@@ -52,7 +58,6 @@ mission_url = 'https://www.v2ex.com/mission/daily'
 
 login(signin_url)
 get_money(mission_url)
-get_balance(balance_url)
 
 
 
