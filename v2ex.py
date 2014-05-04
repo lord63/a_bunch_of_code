@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 #-*- coding: utf-8 -*-
 
+from string import maketrans
+
 import requests
 from lxml import html
 from v2ex_config import USER, PASSWD
@@ -29,13 +31,13 @@ def get_money(mission_url):
     tree = html.fromstring(r.text)
 
     raw_once = tree.xpath('//input[@type="button"]/@onclick')[0]
-    once = raw_once.split('=', 1)[1].replace(';', '').replace("'", '').strip()
-    url = 'https://www.v2ex.com' + once
+    table = maketrans('', '')
+    once = raw_once.split('=', 1)[1].translate(table, " ';")
     if once == '/balance':
         print "You have completed the mission today."
         return
     else:
-        s.get(url, verify=False)
+        s.get('https://www.v2ex.com'+once, verify=False)
         get_balance(balance_url)
 
 
