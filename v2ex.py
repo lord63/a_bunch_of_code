@@ -1,7 +1,10 @@
 #!/usr/bin/env python
-#-*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 
 from string import maketrans
+import logging
+import sys
+from os import path
 
 import requests
 from lxml import html
@@ -46,10 +49,15 @@ def get_balance(balance_url):
     tree = html.fromstring(r.text)
     total = tree.xpath('//table[@class="data"]/tr[2]/td[4]/text()')[0]
     today = tree.xpath('//table[@class="data"]/tr[2]/td[5]/span/text()')[0]
+    logging.info(today+'    '+total)
     print "Today: " + today
     print "Total: " + total
 
 
+logging.basicConfig(
+    filename=path.join(sys.path[0], 'v2ex.log'),
+    level='INFO',
+    formate='%(asctime)s [%(levelname)s] %(message)s')
 s = requests.session()
 s.headers.update({'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; \
                    rv:28.0) Gecko/20100101 Firefox/28.0'})
@@ -60,10 +68,3 @@ mission_url = 'https://www.v2ex.com/mission/daily'
 
 login(signin_url)
 get_money(mission_url)
-
-
-
-
-
-
-
