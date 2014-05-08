@@ -58,6 +58,10 @@ logging.basicConfig(
     filename=path.join(sys.path[0], 'v2ex.log'),
     level='INFO',
     format='%(asctime)s [%(levelname)s] %(message)s')
+# Disable log message from the requests library
+# For example: Starting new HTTPS connection (1): www.v2ex.com
+requests_log = logging.getLogger("requests")
+requests_log.setLevel(logging.WARNING)
 
 s = requests.session()
 s.headers.update({'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; \
