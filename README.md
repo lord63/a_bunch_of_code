@@ -31,6 +31,6 @@ MIT
 [2]: https://github.com/kennethreitz/requests  "Requests"
 [3]: https://github.com/lxml/lxml  "Lxml"
 [4]: http://www.crummy.com/software/BeautifulSoup/  "BeautifulSoup"
-[5]: ./src/001.png
-[6]: ./src/002.png
-[7]: ./src/003.png
+[5]: ./img/001.png
+[6]: ./img/002.png
+[7]: ./img/003.png
