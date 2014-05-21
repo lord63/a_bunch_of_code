@@ -13,7 +13,7 @@ cursor = connect.cursor()
 
 def check(current_num):
     try:
-        cursor.execute('SELECT * FROM comics WHERE num="%s"' % current_num)
+        cursor.execute('SELECT * FROM comics WHERE num=?', (current_num,))
     except sqlite3.OperationalError:
         cursor.execute('CREATE TABLE comics (num text)')
         return False
@@ -28,7 +28,7 @@ if check(num):
     print 'NARUTO: not updated yet.'
 else:
     print 'NARUTO: has been updated to', num
-    cursor.execute('INSERT INTO comics VALUES ("%s")' % num)
+    cursor.execute('INSERT INTO comics VALUES (?)', (num,))
     connect.commit()
 
 
