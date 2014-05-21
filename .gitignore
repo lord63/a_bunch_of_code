@@ -3,3 +3,4 @@ __pycache__/
 *.py[cod]
 v2ex_config.py
 v2ex.log
+*.db
