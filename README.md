@@ -4,30 +4,23 @@ A bunch of code that I wrote before or I got from somewhere, just for backup.
 
 ---
 
-### **v2ex**
+### **comics**
 
-功能：
-
-模拟登录v2ex完成任务领钱 OvO
-
-依赖：
-
-*  Requests
-
-*  Lxml
-
-参考：
-
-*  [1](http://www.v2ex.com/t/69166)
-
-*  [2](http://www.v2ex.com/t/80927)
-
-*  [3](http://www.v2ex.com/t/68549)
+检查Naruto漫画是否有更新.
 
 ---
 
 ### **M.bmp**
 
-功能： 运行它后将在当前文件夹中产生一张有复杂花纹的图片。
+Desciption： After running this script, an amazing picture will appear in your current folder.
+It may takes several minutes depending on your pc. I found it from [here](https://gist.github.com/wenLiangcan/4110576).
 
-来源： [摸我](https://gist.github.com/wenLiangcan/4110576)
+---
+
+### **V2EX**
+
+模拟登录v2ex完成任务领钱 OvO
+
+
+
+
