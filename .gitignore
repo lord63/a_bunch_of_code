@@ -1,6 +1,14 @@
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
+
+# about the v2ex
 v2ex_config.py
 v2ex.log
+
+# about the comics
 *.db
+
+# about the recipes
+*.mobi
+debug/*
