@@ -8,6 +8,7 @@ v2ex.log
 
 # about the comics
 *.db
+config.py
 
 # about the recipes
 *.mobi
