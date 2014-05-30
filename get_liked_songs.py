@@ -45,7 +45,7 @@ param = {
 }
 
 songs = {}
-for n in range(5):
+for n in range(30):
     q = s.get('http://www.douban.com/j/app/radio/people', params=param)
     for i in range(44):  # the song number in a json, not always the same.
         try:
