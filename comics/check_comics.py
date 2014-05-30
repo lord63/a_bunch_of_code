@@ -20,14 +20,17 @@ def check(current_num):
     else:
         return False if cursor.fetchone() is None else True
 
-naruto_comics = 'http://www.tvimm.com/NARUTO.html#1'
+naruto_comics = 'http://www.tvimm.com/NARUTO.html'
 r = requests.get(naruto_comics)
 soup = BeautifulSoup(r.text)
-num = soup.find('a', target='_blank')['href'].split('/')[-1]
+href = soup.find('a', target='_blank')['href']
+num = href.split('/')[-1]
+
 if check(num):
     print 'NARUTO: not updated yet.'
 else:
     print 'NARUTO: has been updated to', num
+    print 'Click here--> ' + 'http://www.tvimm.com' + href
     cursor.execute('INSERT INTO comics VALUES (?)', (num,))
     connect.commit()
 
