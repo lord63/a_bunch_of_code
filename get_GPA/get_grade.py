@@ -7,6 +7,20 @@ import requests
 from lxml import html
 from config import STUDENTID, PASSWORD
 
+def process(tds):
+	for td in tds:
+		if isinstance(td, unicode): 
+			tds.remove(td)
+	return [float(td) for td in tds]
+
+def marks_to_points(td):
+	if 95 <= td <= 100:
+		return 5.0
+	elif 60 <= td <= 94:
+		return (td-45)/10.0
+	else:
+		return 0
+
 s = requests.Session()
 # Change to a mobile UA, I think this task will be easier via mobile.
 s.headers.update({'User-Agent': 'Mozilla/5.0 (iPhone; U; CPU iPhone OS 3_0 \
@@ -53,9 +67,20 @@ print 'Login successfully.'
 # The page which contains your marks 
 header5 = {'Referer': 'http://i.hdu.edu.cn/dcp/xphone/m.jsp?'}
 r5 = s.get('http://i.hdu.edu.cn/dcp/xphone/cjcx.jsp', headers=header5)
-with open('/home/lord63/code/get_grade/3', 'w') as f:
-    f.write(r5.text.encode('utf-8'))
 print 'Get your marks successfully.'
+
+tree = html.fromstring(r5.text)
+tds = tree.xpath('//td[@class="xl1"]/text()')
+del tds[:3]
+tds = process(tds)
+total_credits = 0.0
+total_grade_points = 0.0
+
+for i in range(0, len(tds), 2):
+	total_credits += tds[i]
+	total_grade_points += tds[i] * marks_to_points(tds[i+1])
+gpa = total_grade_points / total_credits
+print 'Your GPA is: %.2f' % gpa
 
 
 
