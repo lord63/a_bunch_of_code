@@ -23,5 +23,5 @@
 
 ### 参考：
 
-飞信发送短信的函数来自[laomo]('https://gist.github.com/laomo/c328834f23b26088b280#file-fetion-py')
+飞信发送短信的函数来自[laomo](https://gist.github.com/laomo/c328834f23b26088b280#file-fetion-py)
 
