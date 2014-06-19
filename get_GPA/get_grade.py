@@ -5,27 +5,28 @@ import hashlib
 
 import requests
 from lxml import html
+from prettytable import PrettyTable
 from config import STUDENTID, PASSWORD
 
 def process(tds):
-	for td in tds:
-		if isinstance(td, unicode): 
-			tds.remove(td)
-	return [float(td) for td in tds]
+    for td in tds:
+        if isinstance(td, unicode): 
+            tds.remove(td)
+    return [float(td) for td in tds]
 
 def marks_to_points(td):
-	if 95 <= td <= 100:
-		return 5.0
-	elif 60 <= td <= 94:
-		return (td-45)/10.0
-	else:
-		return 0
+    if 95 <= td <= 100:
+        return 5.0
+    elif 60 <= td <= 94:
+        return (td-45)/10.0
+    else:
+        return 0
 
 s = requests.Session()
 # Change to a mobile UA, I think this task will be easier via mobile.
 s.headers.update({'User-Agent': 'Mozilla/5.0 (iPhone; U; CPU iPhone OS 3_0 \
     like Mac OS X; en-us) AppleWebKit/528.18 (KHTML, like Gecko) Version/4.0\
-     Mobile/7A341 Safari/528.16'})
+    Mobile/7A341 Safari/528.16'})
 
 
 # To get the lt, a parameter which will be used to login.
@@ -71,19 +72,21 @@ print 'Get your marks successfully.'
 
 tree = html.fromstring(r5.text)
 tds = tree.xpath('//td[@class="xl1"]/text()')
-del tds[:3]
-tds = process(tds)
+body = process(tds[3:])
 total_credits = 0.0
 total_grade_points = 0.0
 
-for i in range(0, len(tds), 2):
-	total_credits += tds[i]
-	total_grade_points += tds[i] * marks_to_points(tds[i+1])
+for i in range(0, len(body), 2):
+    total_credits += body[i]
+    total_grade_points += body[i] * marks_to_points(body[i+1])
 gpa = total_grade_points / total_credits
+
+# Print your scores in a table
+x = PrettyTable(tds[:3])
+x.align[tds[0]] = "l"
+x.padding_width = 1
+for i, td in zip(range(3,len(tds),3), tds):
+    x.add_row(tds[i:i+3])
+print x
+
 print 'Your GPA is: %.2f' % gpa
-
-
-
-
-
-
