@@ -49,7 +49,7 @@ def get_balance(balance_url):
     tree = html.fromstring(r.text)
     total = tree.xpath('//table[@class="data"]/tr[2]/td[4]/text()')[0]
     today = tree.xpath('//table[@class="data"]/tr[2]/td[5]/span/text()')[0]
-    logging.info('%-45sTotal:%-13s' % (today, total)) 
+    logging.info('%-26sTotal:%-13s' % (today, total)) 
     print "Today: " + today
     print "Total: " + total
 
