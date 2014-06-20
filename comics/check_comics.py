@@ -3,6 +3,7 @@
 
 import sqlite3
 from os import path
+from datetime import date
 import sys
 
 import requests
@@ -14,9 +15,9 @@ cursor = connect.cursor()
 
 def check(current_num):
     try:
-        cursor.execute('SELECT * FROM comics WHERE num=?', (current_num,))
+        cursor.execute('SELECT * FROM comics WHERE number=?', (current_num,))
     except sqlite3.OperationalError:
-        cursor.execute('CREATE TABLE comics (num text)')
+        cursor.execute('CREATE TABLE comics (number text, date text)')
         return False
     else:
         return False if cursor.fetchone() is None else True
@@ -33,6 +34,7 @@ def send_message(msg):
     session.get(url_login)
     session.post(url_sendmsg, data={'msg':msg})
 
+today = date.today().isoformat()
 naruto_comics = 'http://www.tvimm.com/NARUTO.html'
 r = requests.get(naruto_comics)
 soup = BeautifulSoup(r.text)
@@ -40,12 +42,15 @@ href = soup.find('a', target='_blank')['href']
 num = href.split('/')[-1]
 
 if check(num):
-    print 'NARUTO: not updated yet.'
+    c = cursor.execute('SELECT * FROM comics WHERE number=?', (num,))
+    latest_volumn, lastest_update_date = c.fetchone()
+    print 'NARUTO: not updated yet, still stays at', latest_volumn 
+    print 'Recently it was updated on', lastest_update_date
 else:
     print 'NARUTO: has been updated to', num
     print 'Click here--> ' + 'http://www.tvimm.com' + href
     send_message('Naruto has been updated to ' + num)
-    cursor.execute('INSERT INTO comics VALUES (?)', (num,))
+    cursor.execute('INSERT INTO comics VALUES (?, ?)', (num, today))
     connect.commit()
 
 
