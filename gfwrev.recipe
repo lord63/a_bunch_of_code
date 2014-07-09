@@ -1,0 +1,22 @@
+from calibre.web.feeds.recipes import BasicNewsRecipe
+
+class GFWrev(BasicNewsRecipe):
+    title = 'GFWrev'
+    __author__ = 'lord63'
+    description = 'A blog about understanding GFW'
+    timefmt = '[%Y-%m-%d]'
+    no_stylesheets = True
+    INDEX = 'http://gfwrev.blogspot.com/search?updated-min=2009-10-01T00:00:00-05:00&updated-max=2011-01-01T00:00:00-05:00&max-results=15'
+    keep_only_tags = [dict(name='div', attrs={'class': 'post hentry'})]
+    remove_tags = [dict(name='div', attrs={'class': 'post-footer'})]
+
+    def parse_index(self):
+        soup = self.index_to_soup(self.INDEX)
+        articles = []
+        titles = soup.findAll('h3', 'post-title entry-title')
+        for title_tag in titles:
+            title = self.tag_to_string(title_tag)
+            url = title_tag.a['href']
+            article = {'title': title, 'url':url}
+            articles.append(article)
+        return [('GFWrev', articles)]
