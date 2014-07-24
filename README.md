@@ -1,19 +1,12 @@
 # A_Bunch_of_Code
 
-A bunch of code that I wrote before or I got from somewhere, just for backup.
+A bunch of code that I wrote before.
 
 ---
 
-## comics
+## Comics
 
 检查Naruto漫画是否有更新.
-
----
-
-## M.bmp
-
-Desciption： After running this script, an amazing picture will appear in your current folder.
-It may takes several minutes depending on your pc. I found it from [here](https://gist.github.com/wenLiangcan/4110576).
 
 ---
 
@@ -27,6 +20,6 @@ It may takes several minutes depending on your pc. I found it from [here](https:
 
 一些我写的 calibre-recipe.
 
+## License
 
-
-
+All the code are under MIT license.
