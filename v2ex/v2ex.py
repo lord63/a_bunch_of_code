@@ -47,9 +47,9 @@ def get_money(mission_url):
 def get_balance(balance_url):
     r = s.get(balance_url, verify=False)
     tree = html.fromstring(r.text)
-    total = tree.xpath('//table[@class="data"]/tr[2]/td[4]/text()')[0]
-    today = tree.xpath('//table[@class="data"]/tr[2]/td[5]/span/text()')[0]
-    logging.info('%-26sTotal:%-13s' % (today, total)) 
+    total = tree.xpath('//table[@class="data"]/tr[2]/td[4]/text()')[0].strip()
+    today = tree.xpath('//table[@class="data"]/tr[2]/td[5]/span/text()')[0].strip()
+    logging.info('%-26sTotal:%-13s' % (today, total))
     print "Today: " + today
     print "Total: " + total
 

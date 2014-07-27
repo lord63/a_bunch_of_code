@@ -2,6 +2,9 @@
 __pycache__/
 *.py[cod]
 
+# virtualenv folder
+/**/venv
+
 # about the v2ex
 v2ex_config.py
 v2ex.log
