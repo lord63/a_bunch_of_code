@@ -2,11 +2,18 @@
 # -*- coding: utf-8 -*-
 
 from setuptools import setup
+from codecs import open
+from os import path
+
+here = path.abspath(path.dirname(__file__))
+with open(path.join(here, 'README.md'), encoding='utf-8') as f:
+    long_description = f.read()
 
 setup(
     name='v2ex_daily_mission',
     version='0.1.0',
     description='complete mission, get money, from v2ex',
+    long_description=long_description,
     url='https://github.com/lord63/a_bunch_of_code/tree/master/v2ex',
     author='lord63',
     author_email='lord63.j@gmail.com',

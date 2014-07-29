@@ -73,7 +73,7 @@ if command['log_directory'] is not None:
 
 # subcommand
 @command.action
-def read(count=5):
+def read(count=config['count']):
     """
     read log file
 
@@ -92,7 +92,6 @@ logging.basicConfig(
 # Disable log message from the requests library
 requests_log = logging.getLogger("requests")
 requests_log.setLevel(logging.WARNING)
-
 
 s = requests.session()
 s.headers.update({'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; \
