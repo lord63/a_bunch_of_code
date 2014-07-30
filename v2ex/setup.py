@@ -28,7 +28,7 @@ setup(
         ],
     keywords='v2ex daily money sign',
     packages=['v2ex_daily_mission'],
-    install_requires=['terminal','requests', 'lxml', 'beautifulsoup4'],
+    install_requires=['terminal','requests', 'lxml'],
     package_data={
         'v2ex_daily_mission': ['README.md', 'License'],
     },
