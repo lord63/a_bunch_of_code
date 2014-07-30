@@ -16,3 +16,7 @@ config.py
 # about the recipes
 *.mobi
 debug/*
+
+# python package
+dist/
+*.egg-info

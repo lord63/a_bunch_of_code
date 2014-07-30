@@ -62,13 +62,18 @@ command.option('-p, --password [password]', 'set your password, dafault read fro
 command.option('-l, --log_directory [direcroty]', 'set the log direcroty, default read from config file')
 
 # get config
-with open('v2ex_config.json') as f:
-    config = json.load(f)
+try:
+    with open('v2ex_config.json') as f:
+        config = json.load(f)
+except IOError:
+    print os.getcwd()
+    sys.exit("Don't forget your config.json.\nPlease read "
+           "https://github.com/lord63/a_bunch_of_code/tree/master/v2ex")
 if command.username is not None:
     config['username'] = command.username
 if command.password is not None:
     config['password'] = command.password
-if command['log_directory'] is not None:
+if command.log_directory is not None:
     config['log_directory'] = command.log_directory
 
 # subcommand
@@ -102,9 +107,10 @@ balance_url = 'https://www.v2ex.com/balance'
 mission_url = 'https://www.v2ex.com/mission/daily'
 
 def main():
-    login(signin_url)
-    get_money(mission_url)
+    logging.info('test')
+    if len(sys.argv) == 1:
+        login(signin_url)
+        get_money(mission_url)
 
 if __name__ == '__main__':
-    if len(sys.argv) == 1:
-        main()
+    main()
