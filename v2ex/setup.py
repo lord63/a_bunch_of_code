@@ -30,7 +30,7 @@ setup(
     packages=['v2ex_daily_mission'],
     install_requires=['terminal','requests', 'lxml'],
     package_data={
-        'v2ex_daily_mission': ['README.md', 'License'],
+        'v2ex_daily_mission': ['README.md', 'LICENSE'],
     },
     entry_points={
         'console_scripts':[
