@@ -69,7 +69,6 @@ def main():
         with open('v2ex_config.json') as f:
             config = json.load(f)
     except IOError:
-        print os.getcwd()
         sys.exit("Don't forget your config.json.\nPlease read "
                "https://github.com/lord63/a_bunch_of_code/tree/master/v2ex")
 
@@ -100,8 +99,13 @@ def main():
     mission_url = 'https://www.v2ex.com/mission/daily'
 
     if 'read' not in sys.argv:
-        login(signin_url, config)
-        get_money(mission_url, balance_url)
+        try:
+            login(signin_url, config)
+            get_money(mission_url, balance_url)
+        except KeyError:
+            print 'Keyerror, please check your config file.'
+        except IndexError:
+            print 'Please check your username and password.'
 
 
 if __name__ == '__main__':
