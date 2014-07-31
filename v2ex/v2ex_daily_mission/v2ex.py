@@ -66,7 +66,7 @@ def main():
 
     # get the configuration
     try:
-        with open('v2ex_config.json') as f:
+        with open(os.path.join(sys.path[0], 'v2ex_config.json')) as f:
             config = json.load(f)
     except IOError:
         sys.exit("Don't forget your config.json.\nPlease read "
