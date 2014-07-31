@@ -62,11 +62,7 @@ def get_balance(balance_url):
 
 
 def main():
-    # command parse and set
     command = Command('v2ex_daily_mission', 'complete the mission and get money')
-    command.option('-u, --username [username]', 'set your username, default read from config file')
-    command.option('-p, --password [password]', 'set your password, dafault read from config file')
-    command.option('-l, --log_directory [log_direcroty]', 'set the log direcroty, default read from config file')
 
     # get the configuration
     try:
@@ -76,12 +72,6 @@ def main():
         print os.getcwd()
         sys.exit("Don't forget your config.json.\nPlease read "
                "https://github.com/lord63/a_bunch_of_code/tree/master/v2ex")
-    if command.username is not None:
-        config['username'] = command.username
-    if command.password is not None:
-        config['password'] = command.password
-    if command.log_directory is not None:
-        config['log_directory'] = command.log_directory
 
     # subcommand
     @command.action
