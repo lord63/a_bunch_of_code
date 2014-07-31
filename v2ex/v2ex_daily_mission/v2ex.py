@@ -57,8 +57,8 @@ def get_balance(balance_url):
     total = tree.xpath('//table[@class="data"]/tr[2]/td[4]/text()')[0].strip()
     today = tree.xpath('//table[@class="data"]/tr[2]/td[5]/span/text()')[0].strip()
     logging.info('%-26sTotal:%-8s' % (today, total))
-    print "Today: " + today
-    print "Total: " + total
+    print "Today: {0}".format(today.encode('utf-8'))
+    print "Total: {0}".format(total.encode('utf-8'))
 
 
 def main():
@@ -66,7 +66,7 @@ def main():
     command = Command('v2ex_daily_mission', 'complete the mission and get money')
     command.option('-u, --username [username]', 'set your username, default read from config file')
     command.option('-p, --password [password]', 'set your password, dafault read from config file')
-    command.option('-l, --log_directory [direcroty]', 'set the log direcroty, default read from config file')
+    command.option('-l, --log_directory [log_direcroty]', 'set the log direcroty, default read from config file')
 
     # get the configuration
     try:
@@ -109,8 +109,7 @@ def main():
     balance_url = 'https://www.v2ex.com/balance'
     mission_url = 'https://www.v2ex.com/mission/daily'
 
-    logging.info('test')
-    if len(sys.argv) == 1:
+    if 'read' not in sys.argv:
         login(signin_url, config)
         get_money(mission_url, balance_url)
 
