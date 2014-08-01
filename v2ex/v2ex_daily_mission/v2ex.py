@@ -55,14 +55,16 @@ def get_balance(balance_url):
     r = s.get(balance_url, verify=False)
     tree = html.fromstring(r.text)
     total = tree.xpath('//table[@class="data"]/tr[2]/td[4]/text()')[0].strip()
-    today = tree.xpath('//table[@class="data"]/tr[2]/td[5]/span/text()')[0].strip()
+    today = tree.xpath(
+        '//table[@class="data"]/tr[2]/td[5]/span/text()')[0].strip()
     logging.info('%-26sTotal:%-8s' % (today, total))
     print "Today: {0}".format(today.encode('utf-8'))
     print "Total: {0}".format(total.encode('utf-8'))
 
 
 def main():
-    command = Command('v2ex_daily_mission', 'complete the mission and get money')
+    command = Command('v2ex_daily_mission',
+                      'complete the mission and get money')
 
     # get the configuration
     try:
@@ -70,7 +72,7 @@ def main():
             config = json.load(f)
     except IOError:
         sys.exit("Don't forget your config.json.\nPlease read "
-               "https://github.com/lord63/a_bunch_of_code/tree/master/v2ex")
+                 "https://github.com/lord63/a_bunch_of_code/tree/master/v2ex")
 
     # subcommand
     @command.action
