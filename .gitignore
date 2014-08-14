@@ -20,3 +20,6 @@ debug/*
 # python package
 dist/
 *.egg-info
+
+# temp
+temp/
