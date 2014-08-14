@@ -44,8 +44,7 @@ def get_money(mission_url, balance_url):
     table = maketrans('', '')
     once = raw_once.split('=', 1)[1].translate(table, " ';")
     if once == '/balance':
-        print "You have completed the mission today."
-        return
+        sys.exit("You have completed the mission today.")
     else:
         s.get('https://www.v2ex.com'+once, verify=False)
         get_balance(balance_url)
