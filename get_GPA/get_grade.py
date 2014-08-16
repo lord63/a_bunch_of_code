@@ -10,7 +10,7 @@ from config import STUDENTID, PASSWORD
 
 def process(tds):
     for td in tds:
-        if isinstance(td, unicode): 
+        if isinstance(td, unicode):
             tds.remove(td)
     return [float(td) for td in tds]
 
@@ -65,11 +65,15 @@ r4 = s.get('http://i.hdu.edu.cn/dcp/xphone/m.jsp', headers=header3)
 print 'Login successfully.'
 
 
-# The page which contains your marks 
+# The page which contains your marks
 header5 = {'Referer': 'http://i.hdu.edu.cn/dcp/xphone/m.jsp?'}
 r5 = s.get('http://i.hdu.edu.cn/dcp/xphone/cjcx.jsp', headers=header5)
 print 'Get your marks successfully.'
 
+# Log out
+r6 = s.get('http://i.hdu.edu.cn/dcp/dcp/comm/jsp/logout.jsp', headers=header5)
+
+# Procss the data contains your marks
 tree = html.fromstring(r5.text)
 tds = tree.xpath('//td[@class="xl1"]/text()')
 body = process(tds[3:])
