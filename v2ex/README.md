@@ -7,7 +7,7 @@
 ## Intro：
 
 模拟登录v2ex完成任务领钱 OvO
- 
+
 ## Requirements：
 
 *  Requests
@@ -37,13 +37,17 @@
 
 查看最近的情况(默认天数在 v2ex_config.josn 的 count 中设置)：
 
-    $ v2ex_daily_mission read 
+    $ v2ex_daily_mission read
 
 也可以通过参数来查看最近的情况
 
     $ v2ex_daily_mission read -c NUMBER
 
 通过 `v2ex_daily_mission -h` 和 `v2ex_daily_mission read -h` 获得使用帮助
+
+建议将任务加入 `cron` 定时运行, 比如我的：
+
+    12 19 * * * /usr/local/bin/v2ex_daily_mission
 
 ## Snapshots
 
@@ -61,7 +65,7 @@ if you have done it:
 read log file to know recent days(I set `"count": 5 `in the config file):
 
     $ v2ex_daily_mission read
-    2014-07-27 19:12:03,902 [INFO] 20140727 的每日登录奖励 15 铜币    Total:5346.0  
+    2014-07-27 19:12:03,902 [INFO] 20140727 的每日登录奖励 15 铜币    Total:5346.0
     2014-07-28 19:12:03,751 [INFO] 20140728 的每日登录奖励 28 铜币    Total:5374.0
     2014-07-29 19:12:03,750 [INFO] 20140729 的每日登录奖励 27 铜币    Total:5401.0
     2014-07-30 19:12:03,471 [INFO] 20140730 的每日登录奖励 12 铜币    Total:5413.0
@@ -75,9 +79,7 @@ also you can use the parameter:
 ## Reference：
 
 *  [1](http://www.v2ex.com/t/69166)
-
 *  [2](http://www.v2ex.com/t/80927)
-
 *  [3](http://www.v2ex.com/t/68549)
 
 ## License
