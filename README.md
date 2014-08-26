@@ -20,6 +20,10 @@ A bunch of code that I wrote before.
 
 一些我写的 calibre-recipe.
 
+## Wangyi
+
+一个下载网易摄影图册的小玩意，支持下载作者的全部专辑和单张专辑
+
 ## License
 
 All the code are under MIT license.
