@@ -62,8 +62,9 @@ def get_balance(balance_url):
 
 
 def main():
-    command = Command('v2ex_daily_mission',
-                      'complete the mission and get money')
+    signin_url = 'https://www.v2ex.com/signin'
+    balance_url = 'https://www.v2ex.com/balance'
+    mission_url = 'https://www.v2ex.com/mission/daily'
 
     # get the configuration
     try:
@@ -73,6 +74,8 @@ def main():
         sys.exit("Don't forget your config.json.\nPlease read "
                  "https://github.com/lord63/a_bunch_of_code/tree/master/v2ex")
 
+    command = Command('v2ex_daily_mission',
+                      'complete the mission and get money')
     # subcommand
     @command.action
     def read(count=config['count']):
@@ -84,6 +87,17 @@ def main():
         """
         file_path = os.path.join(config['log_directory'], 'v2ex.log')
         os.system('tail -n {0} {1}'.format(count, file_path))
+
+    @command.action
+    def last():
+        """how long you have kept signing in"""
+        login(signin_url, config)
+        r = s.get(mission_url, verify=False)
+        tree = html.fromstring(r.text)
+        last = tree.xpath(
+            '//div[@id="Main"]/div[@class="box"]/div[3]/text()')[0].strip()
+        print last.encode('utf-8')
+
     command.parse()
 
     # set log
@@ -95,11 +109,7 @@ def main():
     requests_log = logging.getLogger("requests")
     requests_log.setLevel(logging.WARNING)
 
-    signin_url = 'https://www.v2ex.com/signin'
-    balance_url = 'https://www.v2ex.com/balance'
-    mission_url = 'https://www.v2ex.com/mission/daily'
-
-    if 'read' not in sys.argv:
+    if len(sys.argv) == 1:
         try:
             login(signin_url, config)
             get_money(mission_url, balance_url)
