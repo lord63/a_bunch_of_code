@@ -8,6 +8,7 @@ import sys
 import json
 
 import requests
+from requests.packages import urllib3
 from lxml import html
 from terminal import Command
 import v2ex_daily_mission
@@ -17,7 +18,8 @@ import v2ex_daily_mission
 s = requests.session()
 s.headers.update({'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; \
                    rv:28.0) Gecko/20100101 Firefox/28.0'})
-
+# disable urllib3 warning, see #9
+urllib3.disable_warnings()
 
 def get_once(page_text):
     tree = html.fromstring(page_text)
