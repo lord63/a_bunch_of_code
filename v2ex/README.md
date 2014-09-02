@@ -11,9 +11,7 @@
 ## Requirements：
 
 *  Requests
-
 *  Lxml
-
 *  Terminal
 
 ## Install
@@ -42,6 +40,10 @@
 也可以通过参数来查看最近的情况
 
     $ v2ex_daily_mission read -c NUMBER
+
+查看已经连续登录多少天
+
+    $ v2ex_daily_mission last
 
 通过 `v2ex_daily_mission -h` 和 `v2ex_daily_mission read -h` 获得使用帮助
 
@@ -75,6 +77,11 @@ also you can use the parameter:
 
     $ v2ex_daily_mission read -c 1
     2014-07-31 19:12:03,417 [INFO] 20140731 的每日登录奖励 26 铜币    Total:5439.0
+
+get to know how long you've kept signing in:
+
+    $ v2ex_daily_mission last
+    已连续登录 54 天
 
 ## Reference：
 

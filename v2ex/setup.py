@@ -3,6 +3,8 @@
 
 from setuptools import setup
 
+import v2ex_daily_mission
+
 try:
     import pypandoc
     long_description = pypandoc.convert('README.md', 'rst')
@@ -12,7 +14,7 @@ except (IOError, ImportError):
 
 setup(
     name='v2ex_daily_mission',
-    version='0.1.0',
+    version=v2ex_daily_mission.__version__,
     description='complete mission, get money, from v2ex',
     long_description=long_description,
     url='https://github.com/lord63/a_bunch_of_code/tree/master/v2ex',
@@ -20,7 +22,7 @@ setup(
     author_email='lord63.j@gmail.com',
     license='MIT',
     classifiers=[
-        'Development Status :: 3 - Alpha',
+        'Development Status :: 4 - Beta',
         'Operating System :: POSIX',
         'Operating System :: POSIX :: Linux',
         'License :: OSI Approved :: MIT License',

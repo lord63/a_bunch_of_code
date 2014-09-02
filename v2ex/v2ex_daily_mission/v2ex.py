@@ -10,6 +10,7 @@ import json
 import requests
 from lxml import html
 from terminal import Command
+import v2ex_daily_mission
 
 
 # set the session and header.
@@ -74,8 +75,8 @@ def main():
         sys.exit("Don't forget your config.json.\nPlease read "
                  "https://github.com/lord63/a_bunch_of_code/tree/master/v2ex")
 
-    command = Command('v2ex_daily_mission',
-                      'complete the mission and get money')
+    command = Command('v2ex_daily_mission', description='complete the mission and get money',
+                      version=v2ex_daily_mission.__version__)
     # subcommand
     @command.action
     def read(count=config['count']):
