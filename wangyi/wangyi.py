@@ -7,18 +7,18 @@ import requests
 from bs4 import BeautifulSoup
 
 
-def download_photos(url):
-    if url.endswith("pp.163.com/") or url.endswith("pp.163.com"):
-        download_photo_collections(url)
+def download_photos(given_url):
+    if given_url.endswith("pp.163.com/") or given_url.endswith("pp.163.com"):
+        download_photo_albums(given_url)
     else:
-        download_photo_collection(url)
+        download_photo_album(given_url)
 
 
-def download_photo_collection(url):
-    photo_urls, collection_title, author = get_collection_info(url)
+def download_photo_album(album_url):
+    photo_urls, album_title, author = get_album_info(album_url)
 
     main_dir_name = '/home/lord63/pictures/WangYi/'
-    save_path = main_dir_name + author + "/" + collection_title
+    save_path = main_dir_name + author + "/" + album_title
     if os.path.exists(save_path):
         pass
     else:
@@ -29,44 +29,43 @@ def download_photo_collection(url):
         picture_save_path = save_path + "/" + str(number) + image_format
         if os.path.isfile(picture_save_path):
             return
-        r = requests.get(photo_url, stream=True)  # To get the raw content.
+        request = requests.get(photo_url, stream=True)
         with open(picture_save_path, "wb") as f:
-            for chunk in r.iter_content(1024):
+            for chunk in request.iter_content(1024):
                 f.write(chunk)
-    print "Successfully downloaded the collection: " + collection_title
+    print "Successfully downloaded the album: " + album_title
 
 
-def download_photo_collections(url):
-    page = requests.get(url)
-    soup = BeautifulSoup(page.text, "lxml")
-    collection_urls = []
-    for url in soup.find_all('li', 'w-cover'):
-        url = url.a['href']
-        collection_urls.append(url)
-    print "Successfully got the collection_urls\n"
+def download_photo_albums(homepage):
+    page = requests.get(homepage)
+    soup = BeautifulSoup(page.text)
+    album_urls = []
+    for album_url in soup.find_all('li', 'w-cover'):
+        album_url = album_url.a['href']
+        album_urls.append(album_url)
+    print "Successfully got the album_urls\n"
 
-    for colletion_url in collection_urls:
-        download_photo_collection(colletion_url)
-    print "\nPhoto collections have be downloaded :)"
+    for album_url in album_urls:
+        download_photo_album(album_url)
+    print "\nPhoto albums have be downloaded :)"
 
 
-def get_collection_info(url):
-    page = requests.get(url)
-    soup = BeautifulSoup(page.text, "lxml")
+def get_album_info(album_url):
+    page = requests.get(album_url)
+    soup = BeautifulSoup(page.text)
 
     photo_urls = []
-    for url in soup.find_all('div', 'pic-area'):
-        url = url.img['data-lazyload-src']
-        photo_urls.append(url)
+    for photo_url in soup.find_all('div', 'pic-area'):
+        photo_url = photo_url.img['data-lazyload-src']
+        photo_urls.append(photo_url)
 
     name = soup.find(id='p_username_copy').string.strip()
     count = soup.find('p', 'picset-count').b.string
-    collection_title = name + ''.join(count)
+    album_title = name + ''.join(count)
     author = soup.find('p', 'picset-author').a.string
 
-    return photo_urls, collection_title, author
+    return photo_urls, album_title, author
 
-# ----------------------------------------------------------------------#
-
-url = raw_input("Please input the url: ")
-download_photos(url)
+if __name__ == '__main__':
+    URL = raw_input("Please input the url: ")
+    download_photos(URL)
