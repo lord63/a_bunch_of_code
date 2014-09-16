@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import os
+import sys
 
 import requests
 from bs4 import BeautifulSoup
@@ -43,11 +44,11 @@ def download_photo_albums(homepage):
     for album_url in soup.find_all('li', 'w-cover'):
         album_url = album_url.a['href']
         album_urls.append(album_url)
-    print "Successfully got the album_urls\n"
+    print "\nSuccessfully got the album_urls"
 
     for album_url in album_urls:
         download_photo_album(album_url)
-    print "\nPhoto albums have be downloaded :)"
+    print "Photo albums have be downloaded :)\n"
 
 
 def get_album_info(album_url):
@@ -67,5 +68,8 @@ def get_album_info(album_url):
     return photo_urls, album_title, author
 
 if __name__ == '__main__':
-    URL = raw_input("Please input the url: ")
-    download_photos(URL)
+    URLS = sys.argv[1:]
+    if not URLS:
+        URLS = raw_input("Input the url, separate with one space: ").split()
+    for URL in URLS:
+        download_photos(URL)
