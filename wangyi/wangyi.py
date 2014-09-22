@@ -60,6 +60,8 @@ def get_album_info(album_url):
         photo_urls.append(photo_url)
 
     name = soup.find(id='p_username_copy').string.strip()
+    if '/' in name:
+        name = name.replace('/', '%')
     count = soup.find('p', 'picset-count').b.string
     album_title = (name + ''.join(count)).encode('utf-8')
     author = soup.find('p', 'picset-author').a.string.encode('utf-8')
