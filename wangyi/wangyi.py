@@ -83,7 +83,7 @@ def get_download_location(given_urls):
     if photo_album_urls:
         for photo_album_url in photo_album_urls:
             photo_urls, album_title, author = get_album_info(photo_album_url)
-            print 'Have a check your single album in {}{}/{}'.format(
+            print 'Your single album in {}{}/{}'.format(
                 MAIN_DIR_NAME, author, album_title)
 
 if __name__ == '__main__':
