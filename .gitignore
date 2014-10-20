@@ -2,8 +2,11 @@
 __pycache__/
 *.py[cod]
 
+# virtualenv folder
+/**/venv
+
 # about the v2ex
-v2ex_config.py
+v2ex_config.json
 v2ex.log
 
 # about the comics
@@ -13,3 +16,10 @@ config.py
 # about the recipes
 *.mobi
 debug/*
+
+# python package
+dist/
+*.egg-info
+
+# temp
+temp/
