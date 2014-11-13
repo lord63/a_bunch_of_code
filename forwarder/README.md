@@ -7,6 +7,11 @@ It's a simple http forwarder, powered by Flask. The idea was totally stolen from
 It's mainly developed to forward ZhihuDaily's feed because Zhihu block the
 requests form GAE. It should be worked with [KindleEar][].
 
+## Requirements
+
+* Flask
+* Requests
+
 ## Usage
 
 make the url to be forwarded look like this:
