@@ -44,7 +44,7 @@ num = href.split('/')[-1]
 if check(num):
     c = cursor.execute('SELECT * FROM comics WHERE number=?', (num,))
     latest_volumn, lastest_update_date = c.fetchone()
-    print 'NARUTO: not updated yet, still stays at', latest_volumn 
+    print 'NARUTO: not updated yet, still stays at', latest_volumn
     print 'Recently it was updated on', lastest_update_date
 else:
     print 'NARUTO: has been updated to', num
@@ -52,5 +52,3 @@ else:
     send_message('Naruto has been updated to ' + num)
     cursor.execute('INSERT INTO comics VALUES (?, ?)', (num, today))
     connect.commit()
-
-
