@@ -7,6 +7,7 @@ import sys
 import requests
 from bs4 import BeautifulSoup
 
+MAIN_DIR_NAME = '/home/lord63/pictures/WangYi/'
 
 def download_photos(given_url):
     if given_url.endswith("pp.163.com/") or given_url.endswith("pp.163.com"):
@@ -17,9 +18,7 @@ def download_photos(given_url):
 
 def download_photo_album(album_url):
     photo_urls, album_title, author = get_album_info(album_url)
-
-    main_dir_name = '/home/lord63/pictures/WangYi/'
-    save_path = main_dir_name + author + "/" + album_title
+    save_path = MAIN_DIR_NAME + author + "/" + album_title
     if os.path.exists(save_path):
         pass
     else:
@@ -28,7 +27,7 @@ def download_photo_album(album_url):
     for photo_url, number in zip(photo_urls, range(len(photo_urls))):
         image_format = '.' + photo_url.split('.')[-1]
         picture_save_path = save_path + "/" + str(number) + image_format
-        if os.path.isfile(picture_save_path):
+        if os.path.exists(picture_save_path):
             return
         request = requests.get(photo_url, stream=True)
         with open(picture_save_path, "wb") as f:
@@ -48,7 +47,7 @@ def download_photo_albums(homepage):
 
     for album_url in album_urls:
         download_photo_album(album_url)
-    print "Photo albums have be downloaded :)\n"
+    print "Photo albums have be downloaded\n"
 
 
 def get_album_info(album_url):
@@ -61,15 +60,36 @@ def get_album_info(album_url):
         photo_urls.append(photo_url)
 
     name = soup.find(id='p_username_copy').string.strip()
+    if '/' in name:
+        name = name.replace('/', '%')
     count = soup.find('p', 'picset-count').b.string
-    album_title = name + ''.join(count)
-    author = soup.find('p', 'picset-author').a.string
+    album_title = (name + ''.join(count)).encode('utf-8')
+    author = soup.find('p', 'picset-author').a.string.encode('utf-8')
 
     return photo_urls, album_title, author
 
+def get_download_location(given_urls):
+    print '\nAll the photo albums have been downloaded :)'
+    photo_albums_urls = [url for url in given_urls if \
+                         url.endswith("pp.163.com/") or
+                         url.endswith("pp.163.com")]
+    photo_album_urls = [url for url in given_urls if url not in photo_albums_urls]
+
+    if photo_albums_urls:
+        #photo_urls, album_title, author = get_album_info(photo_albums_urls[0])
+        soup = BeautifulSoup(requests.get(photo_albums_urls[0]).text)
+        author = soup.find('h2', 'host-nname').a['title'].encode('utf-8')
+        print 'Have a check your albums in {}{}/'.format(MAIN_DIR_NAME, author)
+    if photo_album_urls:
+        for photo_album_url in photo_album_urls:
+            photo_urls, album_title, author = get_album_info(photo_album_url)
+            print 'Your single album in {}{}/{}'.format(
+                MAIN_DIR_NAME, author, album_title)
+
 if __name__ == '__main__':
-    URLS = sys.argv[1:]
-    if not URLS:
-        URLS = raw_input("Input the url, separate with one space: ").split()
-    for URL in URLS:
-        download_photos(URL)
+    urls = sys.argv[1:]
+    if not urls:
+        urls = raw_input("Input the url, separate with one space: ").split()
+    for url in urls:
+        download_photos(url)
+    get_download_location(urls)
