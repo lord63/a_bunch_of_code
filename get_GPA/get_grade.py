@@ -6,6 +6,7 @@ import hashlib
 import requests
 from lxml import html
 from prettytable import PrettyTable
+
 from config import STUDENTID, PASSWORD
 
 def process(tds):
