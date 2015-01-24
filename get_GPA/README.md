@@ -12,12 +12,8 @@
 
 ## 如何使用：
 
-在当前目录下新建文件`config.py`, 像这样：
 
-    STUDENTID = 'xxxx'   学号
-    PASSWORD = 'xxxx'    密码
-
-然后`$python get_grade.py` 就可以了
+`$python get_grade.py` 就可以了, 第一次运行需要你输入学号和密码。
 
 显示的效果大概是这样子的:
 
