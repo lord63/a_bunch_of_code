@@ -95,21 +95,21 @@ def login(studentid, md5_password):
 
 
 def fetch_and_count(studentid, md5_password):
-    current_dir = os.path.dirname(os.path.realpath(__file__))
+    cookies_path = os.path.dirname(os.path.realpath(__file__)) + '/cookies'
     # Get your marks
     header_5 = {'Referer': 'http://i.hdu.edu.cn/dcp/xphone/m.jsp'}
 
-    if (os.path.exists(current_dir + '/cookies') and
-        time.time() - os.path.getmtime(current_dir + '/cookies') < 1500):
+    if (os.path.exists(cookies_path) and
+        time.time() - os.path.getmtime(cookies_path) < 1500):
             print 'Reload the cookies.'
             global session
             request_5 = session.get('http://i.hdu.edu.cn/dcp/xphone/cjcx.jsp',
                                     headers=header_5,
                                     cookies=load('cookies'))
     else:
-        if os.path.exists(current_dir + '/cookies'):
+        if os.path.exists(cookies_path):
             print 'Cookies has expired, remove it.'
-            subprocess.call(['rm', current_dir + '/cookies'])
+            subprocess.call(['rm', cookies_path])
         session = login(studentid, md5_password)
         request_5 = session.get('http://i.hdu.edu.cn/dcp/xphone/cjcx.jsp',
                                 headers=header_5)
@@ -132,19 +132,19 @@ def fetch_and_count(studentid, md5_password):
         total_grade_points += body[i] * marks_to_points(body[i+1])
     gpa = round(total_grade_points/total_credits, 4)
 
-    # Print your scores in a table
+    # Print your scores in a table:
     table = PrettyTable(table_data[:3])
     table.align[table_data[0]] = "l"
     table.padding_width = 1
     for i, td in zip(range(3, len(table_data), 3), table_data):
         table.add_row(table_data[i:i+3])
     print table
-    print 'Your GPA is: %.2f' % gpa
+    print 'Your GPA is: %.4f' % gpa
 
 
 def main():
-    current_dir = os.path.dirname(os.path.realpath(__file__))
-    if not os.path.exists(current_dir + '/login_info'):
+    login_info_path = os.path.dirname(os.path.realpath(__file__))
+    if not os.path.exists(login_info_path):
         studentid = raw_input('Student_ID: ')
         password = getpass.getpass()
         md5_password = hashlib.md5(password).hexdigest()
