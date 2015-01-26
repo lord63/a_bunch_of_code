@@ -23,6 +23,7 @@ import logging
 import os
 import sys
 import json
+import re
 
 import requests
 from requests.packages import urllib3
@@ -69,7 +70,10 @@ def get_money(mission_url, balance_url):
     if once == '/balance':
         sys.exit("You have completed the mission today.")
     else:
-        session.get('https://www.v2ex.com'+once, verify=False)
+        headers = {'Referer': 'https://www.v2ex.com/mission/daily'}
+        data = {'once': re.search(r'(?<=once=)\d{5}$', once).group()}
+        session.get('https://www.v2ex.com'+once, verify=False,
+                    headers=headers, data=data)
         get_balance(balance_url)
 
 
