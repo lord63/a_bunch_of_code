@@ -11,8 +11,10 @@ MAIN_DIR_NAME = '/home/lord63/pictures/WangYi/'
 
 def download_photos(given_url):
     if given_url.endswith("pp.163.com/") or given_url.endswith("pp.163.com"):
+        print 'Start download photo albums...'
         download_photo_albums(given_url)
     else:
+        print 'Start download photo album...'
         download_photo_album(given_url)
 
 
@@ -76,10 +78,10 @@ def get_download_location(given_urls):
     photo_album_urls = [url for url in given_urls if url not in photo_albums_urls]
 
     if photo_albums_urls:
-        #photo_urls, album_title, author = get_album_info(photo_albums_urls[0])
-        soup = BeautifulSoup(requests.get(photo_albums_urls[0]).text)
-        author = soup.find('h2', 'host-nname').a['title'].encode('utf-8')
-        print 'Have a check your albums in {}{}/'.format(MAIN_DIR_NAME, author)
+        for photo_albums_url in photo_albums_urls:
+            soup = BeautifulSoup(requests.get(photo_albums_url).text)
+            author = soup.find('h2', 'host-nname').a['title'].encode('utf-8')
+            print 'Have a check your albums in {}{}/'.format(MAIN_DIR_NAME, author)
     if photo_album_urls:
         for photo_album_url in photo_album_urls:
             photo_urls, album_title, author = get_album_info(photo_album_url)
