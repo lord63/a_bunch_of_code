@@ -37,6 +37,6 @@ setup(
     include_package_data=True,
     entry_points={
         'console_scripts':[
-            'v2ex_daily_mission=v2ex_daily_mission.v2ex:main']
+            'v2ex=v2ex_daily_mission.v2ex:main']
     }
 )

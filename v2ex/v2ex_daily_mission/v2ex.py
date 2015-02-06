@@ -11,7 +11,7 @@
 """
 
 __title__ = "v2ex_daily_mission"
-__version__ = "0.2.2"
+__version__ = "0.2.3"
 __author__ = "lord63"
 __homepage__ = "https://github.com/lord63/a_bunch_of_code/tree/master/v2ex"
 __license__ = "MIT"
