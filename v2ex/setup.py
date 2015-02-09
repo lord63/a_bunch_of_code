@@ -3,8 +3,7 @@
 
 from setuptools import setup
 
-from v2ex_daily_mission import v2ex
-
+import v2ex_daily_mission
 
 try:
     import pypandoc
@@ -15,7 +14,7 @@ except (IOError, ImportError):
 
 setup(
     name='v2ex_daily_mission',
-    version=v2ex.__version__,
+    version=v2ex_daily_mission.__version__,
     description='complete mission, get money, from v2ex',
     long_description=long_description,
     url='https://github.com/lord63/a_bunch_of_code/tree/master/v2ex',

@@ -1,3 +1,6 @@
+2015.02.09 v0.2.4
+解决了安装时的 importError 错误
+
 2015.02.06 v0.2.3
 将命令从 v2ex_daily_mission 改为 v2ex
 

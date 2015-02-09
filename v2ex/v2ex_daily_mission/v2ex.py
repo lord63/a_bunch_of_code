@@ -11,7 +11,6 @@
 """
 
 __title__ = "v2ex_daily_mission"
-__version__ = "0.2.3"
 __author__ = "lord63"
 __homepage__ = "https://github.com/lord63/a_bunch_of_code/tree/master/v2ex"
 __license__ = "MIT"
@@ -29,6 +28,8 @@ import requests
 from requests.packages import urllib3
 from lxml import html
 from terminal import Command
+
+from v2ex_daily_mission import __version__
 
 
 # set the session and header.
