@@ -18,6 +18,9 @@ config.py
 *.epub
 debug/
 
+# about 1024
+code.txt
+
 # python package
 dist/
 *.egg-info
