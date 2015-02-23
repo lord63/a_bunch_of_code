@@ -15,7 +15,8 @@ config.py
 
 # about the recipes
 *.mobi
-debug/*
+*.epub
+debug/
 
 # python package
 dist/
