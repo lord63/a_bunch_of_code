@@ -1,0 +1,26 @@
+import urllib2
+import json
+
+from calibre.web.feeds.recipes import BasicNewsRecipe
+
+
+class Zhihudaily(BasicNewsRecipe):
+    title = 'Zhihudaily'
+    __author__ = 'lord63'
+    description = 'Zhihudaily'
+    timefmt = '[%Y-%m-%d]'
+    keep_only_tags = [dict(name='div', attrs={'class': 'content-inner'})]
+
+    def parse_index(self):
+        openner = urllib2.build_opener()
+        openner.addheaders = [('User-agent', 'Mozilla/5.0 (X11; Ubuntu; Linux \
+                               x86_64; rv:28.0) Gecko/20100101 Firefox/28.0'),
+                               ('Referrer', 'http://daily.zhihu.com')
+        ]
+        request = openner.open('http://news.at.zhihu.com/api/1.2/news/latest')
+        info = json.loads(request.read())
+        artitles = []
+        for item in info['news']:
+            artitles.append({'title': item['title'],
+                             'url': item['share_url']})
+        return [('Zhihudaily', artitles)]
