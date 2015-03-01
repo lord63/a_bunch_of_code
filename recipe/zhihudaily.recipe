@@ -1,5 +1,6 @@
 import urllib2
 import json
+import datetime
 
 from calibre.web.feeds.recipes import BasicNewsRecipe
 
@@ -17,7 +18,12 @@ class Zhihudaily(BasicNewsRecipe):
                                x86_64; rv:28.0) Gecko/20100101 Firefox/28.0'),
                                ('Referrer', 'http://daily.zhihu.com')
         ]
+        # Fetch today's news.
         request = openner.open('http://news.at.zhihu.com/api/1.2/news/latest')
+        # Fetch yestoday's news.
+        # date = datetime.date.today().strftime('%Y%m%d')
+        # request = openner.open(
+        #     'http://news.at.zhihu.com/api/1.2/news/before/{0}'.format(date))
         info = json.loads(request.read())
         artitles = []
         for item in info['news']:
