@@ -30,3 +30,10 @@ class Zhihudaily(BasicNewsRecipe):
             artitles.append({'title': item['title'],
                              'url': item['share_url']})
         return [('Zhihudaily', artitles)]
+
+    def preprocess_html(self, soup):
+        question_title = soup.find('h2', 'question-title')
+        headline_title = soup.find('title')
+        if not self.tag_to_string(question_title):
+            question_title.insert(0, self.tag_to_string(headline_title))
+        return soup
