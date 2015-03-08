@@ -143,7 +143,7 @@ def fetch_and_count(studentid, md5_password):
 
 
 def main():
-    login_info_path = os.path.dirname(os.path.realpath(__file__))
+    login_info_path = os.path.dirname(os.path.realpath(__file__)) + '/login_info'
     if not os.path.exists(login_info_path):
         studentid = raw_input('Student_ID: ')
         password = getpass.getpass()
