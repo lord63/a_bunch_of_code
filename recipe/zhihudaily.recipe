@@ -10,6 +10,8 @@ class Zhihudaily(BasicNewsRecipe):
     __author__ = 'lord63'
     description = 'Zhihudaily'
     timefmt = '[%Y-%m-%d]'
+    cover_url = ('https://raw.githubusercontent.com/cdhigh/KindleEar/master/'
+                 'images/cv_zhihudaily.jpg')
     keep_only_tags = [dict(name='div', attrs={'class': 'content-inner'})]
 
     def parse_index(self):
