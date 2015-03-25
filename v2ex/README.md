@@ -23,10 +23,10 @@
 在 `/usr/local/bin/` 目录下新建文件 `v2ex_config.json`, 像这样：
 
     {
-        "username" = 'xxxx',
-        "password" = 'xxxx',
-        "log_directory" = '/path/to/save/logfile/',
-        "count" = 5   # 查看默认的最近的情况的天数，可以自己设置
+        "username": 'xxxx',
+        "password": 'xxxx',
+        "log_directory": '/path/to/save/logfile/',
+        "count": 5   # 查看默认的最近的情况的天数，可以自己设置
     }
 
 完成任务得到钱：
