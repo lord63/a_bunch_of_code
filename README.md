@@ -2,10 +2,6 @@
 
 A bunch of code that I wrote before.
 
-## 1024
-
-检查 1024 的正确的邀请码  o(*////▽////*)q
-
 ## Comics
 
 检查Naruto漫画是否有更新.
