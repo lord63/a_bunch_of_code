@@ -67,7 +67,7 @@ def login(student_id, md5_password):
     # Login in
     # I add referer for all the get/post requests, in case the requests fails.
     header_2 = {'Referer': 'http://cas.hdu.edu.cn/cas/login?service=http%3A%2F\
-                          %2Fi.hdu.edu.cn%2Fdcp%2Findex.jsp'}
+                %2Fi.hdu.edu.cn%2Fdcp%2Findex.jsp'}
     login_url = 'http://cas.hdu.edu.cn/cas/login'
     login_data = {
         'encodedService': 'http%3a%2f%2fi.hdu.edu.cn%2fdcp%2findex.jsp',
@@ -153,7 +153,8 @@ def main():
         student_id = raw_input('Student_ID: ')
         password = getpass.getpass()
         md5_password = hashlib.md5(password).hexdigest()
-        save({'student_id': student_id, 'password': md5_password}, login_info_path)
+        save({'student_id': student_id, 'password': md5_password},
+             login_info_path)
     else:
         md5_password, student_id = load('login_info').values()
     fetch_and_count(student_id, md5_password)
