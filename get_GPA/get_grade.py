@@ -7,6 +7,7 @@ import pickle
 import getpass
 import time
 import subprocess
+import sys
 
 import requests
 from lxml import html
@@ -144,11 +145,15 @@ def fetch_and_count(student_id, md5_password):
 
 def main():
     login_info_path = path.dirname(path.realpath(__file__)) + '/login_info'
+    cookies_path = path.dirname(path.realpath(__file__)) + '/cookies'
+    if len(sys.argv) > 1 and sys.argv[1] == 'new':
+        subprocess.call(['rm', login_info_path])
+        subprocess.call(['rm', cookies_path])
     if not path.exists(login_info_path):
         student_id = raw_input('Student_ID: ')
         password = getpass.getpass()
         md5_password = hashlib.md5(password).hexdigest()
-        save({'student_id': student_id, 'password': md5_password}, 'login_info')
+        save({'student_id': student_id, 'password': md5_password}, login_info_path)
     else:
         md5_password, student_id = load('login_info').values()
     fetch_and_count(student_id, md5_password)
