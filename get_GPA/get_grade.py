@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import hashlib
-import os
+from os import path
 import pickle
 import getpass
 import time
@@ -52,7 +52,7 @@ def load(filename):
         return pickle.load(f)
 
 
-def login(studentid, md5_password):
+def login(student_id, md5_password):
     """Login to the website: http://m.hdu.edu.cn/"""
 
     # To get the lt, a parameter which will be used to login.
@@ -73,7 +73,7 @@ def login(studentid, md5_password):
         'service': 'http://i.hdu.edu.cn/dcp/index.jsp',
         'serviceName': 'null',
         'loginErrCnt': 0,
-        'username': studentid,
+        'username': student_id,
         'password': md5_password,
         'lt': lt
     }
@@ -94,23 +94,23 @@ def login(studentid, md5_password):
     return session
 
 
-def fetch_and_count(studentid, md5_password):
-    cookies_path = os.path.dirname(os.path.realpath(__file__)) + '/cookies'
+def fetch_and_count(student_id, md5_password):
+    cookies_path = path.dirname(path.realpath(__file__)) + '/cookies'
     # Get your marks
     header_5 = {'Referer': 'http://i.hdu.edu.cn/dcp/xphone/m.jsp'}
 
-    if (os.path.exists(cookies_path) and
-        time.time() - os.path.getmtime(cookies_path) < 1500):
+    if (path.exists(cookies_path) and
+       (time.time() - path.getmtime(cookies_path) < 1500)):
             print 'Reload the cookies.'
             global session
             request_5 = session.get('http://i.hdu.edu.cn/dcp/xphone/cjcx.jsp',
                                     headers=header_5,
-                                    cookies=load('cookies'))
+                                    cookies=load(cookies_path))
     else:
-        if os.path.exists(cookies_path):
+        if path.exists(cookies_path):
             print 'Cookies has expired, remove it.'
             subprocess.call(['rm', cookies_path])
-        session = login(studentid, md5_password)
+        session = login(student_id, md5_password)
         request_5 = session.get('http://i.hdu.edu.cn/dcp/xphone/cjcx.jsp',
                                 headers=header_5)
     print 'Get your marks successfully.'
@@ -143,15 +143,15 @@ def fetch_and_count(studentid, md5_password):
 
 
 def main():
-    login_info_path = os.path.dirname(os.path.realpath(__file__)) + '/login_info'
-    if not os.path.exists(login_info_path):
-        studentid = raw_input('Student_ID: ')
+    login_info_path = path.dirname(path.realpath(__file__)) + '/login_info'
+    if not path.exists(login_info_path):
+        student_id = raw_input('Student_ID: ')
         password = getpass.getpass()
         md5_password = hashlib.md5(password).hexdigest()
-        save({'studentid': studentid, 'password': md5_password}, 'login_info')
+        save({'student_id': student_id, 'password': md5_password}, 'login_info')
     else:
-        md5_password, studentid = load('login_info').values()
-    fetch_and_count(studentid, md5_password)
+        md5_password, student_id = load('login_info').values()
+    fetch_and_count(student_id, md5_password)
 
 
 if __name__ == '__main__':
