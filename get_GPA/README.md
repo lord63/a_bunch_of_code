@@ -9,9 +9,11 @@
 * requests
 * lxml
 * prettytable
+* python2.7
 
 ## 如何使用：
 
+安装依赖: `pip install -r requirements.txt`
 
 `$python get_grade.py` 就可以了, 第一次运行需要你输入学号和密码。
 
@@ -22,7 +24,7 @@
     Login successfully.
     Get your marks successfully.
     +----------------+------+------+
-    | 课程名称       | 学分 | 成绩 |
+    | 课程名称        | 学分  | 成绩  |
     +----------------+------+------+
     | xxxxxxxxx      | x.x  |  xx  |
     | xxxxxxxxx      | x.x  |  xx  |
@@ -39,3 +41,5 @@
     | xxxxxxxxx      | x.x  |  xx  |
     +----------------+------+------+
     Your GPA is: x.xx
+
+使用 `$python get_grade.py new` 来获得另一个人的成绩绩点。
