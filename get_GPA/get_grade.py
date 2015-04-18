@@ -150,8 +150,10 @@ def main():
     login_info_path = path.dirname(path.realpath(__file__)) + '/login_info'
     cookies_path = path.dirname(path.realpath(__file__)) + '/cookies'
     if len(sys.argv) > 1 and sys.argv[1] == 'new':
-        subprocess.call(['rm', login_info_path])
-        subprocess.call(['rm', cookies_path])
+        if path.exists(login_info_path):
+            subprocess.call(['rm', login_info_path])
+        if path.exists(cookies_path):
+            subprocess.call(['rm', cookies_path])
     if not path.exists(login_info_path):
         student_id = raw_input('Student_ID: ')
         password = getpass.getpass()
