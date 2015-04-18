@@ -81,8 +81,11 @@ def login(student_id, md5_password):
     request_2 = session.post(login_url, data=login_data, headers=header_2)
     tree_2 = html.fromstring(request_2.text)
     # Get the redirection link
-    redirect_link = tree_2.xpath('//noscript/p/a/@href')[0]
-    print 'Logining...'
+    try:
+        redirect_link = tree_2.xpath('//noscript/p/a/@href')[0]
+        print 'Logining...'
+    except IndexError:
+        sys.exit("Check your password and student id.")
 
     # This redirection is essentional
     header_3 = {'Referer': 'http://cas.hdu.edu.cn/cas/login'}
