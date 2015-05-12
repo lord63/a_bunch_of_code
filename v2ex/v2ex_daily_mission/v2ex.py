@@ -18,6 +18,7 @@ __copyright__ = "Copyright 2014 lord63"
 
 
 from string import maketrans
+from collections import deque
 import logging
 import os
 import sys
@@ -117,7 +118,8 @@ def main():
         :option count: -c, --count [count]
         """
         file_path = os.path.join(config['log_directory'], 'v2ex.log')
-        os.system('tail -n {0} {1}'.format(count, file_path))
+        for line in deque(open(file_path), int(count)):
+            print line,
 
     @command.action
     def last():
