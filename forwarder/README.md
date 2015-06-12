@@ -28,7 +28,7 @@ For more details please check the [ZhihuDaily.py][]
 * [ZhihuDaily API][]
 * [forwarder][] (can run on openshift)
 * [ZhihuDailyForwarder][] (nodejs version)
-* [issue#118] (the reason why I wrote this)
+* [issue#118][] (the reason why I wrote this)
 
 [Bottle]: http://bottlepy.org/docs/stable/index.html
 [End-to-end and Hop-by-hop Headers]: http://tools.ietf.org/html/rfc2616.html#page-92
