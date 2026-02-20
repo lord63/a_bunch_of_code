@@ -1,16 +1,27 @@
 package main
 
 import (
+	"embed"
 	"fmt"
 	"io"
+	"io/fs"
 	"log"
 	"net/http"
 	"os"
 )
 
+//go:embed static/*
+var staticFiles embed.FS
+
 func main() {
 	log.Println("server start...")
-	fs := http.FileServer(http.Dir("./static"))
+
+	staticFS, err := fs.Sub(staticFiles, "static")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	fs := http.FileServer(http.FS(staticFS))
 	http.Handle("/", fs)
 	http.HandleFunc("/upload", uploadFileHandler)
 	if err := http.ListenAndServe(":3001", nil); err != nil {
