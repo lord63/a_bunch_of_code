@@ -22,17 +22,30 @@ file-upload/
 
 ## Getting Started
 
-### Prerequisites
+You can download the compiled tarball directly, extract it, and run the binary. The download package contains the `file-upload` binary.
 
-- Go installed on your machine.
+### Installation
 
-### Running the Server
-
-1. Make sure you are in the `file-upload` directory.
-2. Run the server (or build the binary with `go build` for a single-file deployment):
+1. Go to the [Releases](https://github.com/lord63/a_bunch_of_code/releases) page and download the `.tar.gz` for your platform (e.g., `file-upload-linux-amd64.tar.gz`).
+2. Extract the archive:
    ```bash
-   go run main.go
+   tar -xzf file-upload-linux-amd64.tar.gz
    ```
-3. Open your browser and navigate to [http://localhost:3001](http://localhost:3001).
-4. Drag and drop files into the FilePond interface to upload them.
+3. Run the extracted binary:
+   ```bash
+   ./file-upload
+   ```
 
+### Usage
+
+The binary accepts the following flags:
+
+- `-port`: The port to run the server on (default `"3001"`).
+- `-version`: Display version information and exit.
+
+**Example**:
+```bash
+./file-upload -port 8080
+```
+
+Once running, navigate to `http://localhost:<port>` in your browser and drag/drop files to upload. Uploaded files will be automatically placed in an `uploads/` directory inside your current working directory.

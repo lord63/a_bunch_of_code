@@ -2,6 +2,7 @@ package main
 
 import (
 	"embed"
+	"flag"
 	"fmt"
 	"io"
 	"io/fs"
@@ -13,8 +14,19 @@ import (
 //go:embed static/*
 var staticFiles embed.FS
 
+var version = "0.2.0"
+
 func main() {
-	log.Println("server start...")
+	port := flag.String("port", "3001", "port to run the server on")
+	v := flag.Bool("version", false, "display version and exit")
+	flag.Parse()
+
+	if *v {
+		fmt.Printf("file-upload v%s\n", version)
+		os.Exit(0)
+	}
+
+	log.Printf("server start on port %s...\n", *port)
 
 	staticFS, err := fs.Sub(staticFiles, "static")
 	if err != nil {
@@ -24,7 +36,7 @@ func main() {
 	fs := http.FileServer(http.FS(staticFS))
 	http.Handle("/", fs)
 	http.HandleFunc("/upload", uploadFileHandler)
-	if err := http.ListenAndServe(":3001", nil); err != nil {
+	if err := http.ListenAndServe(":"+*port, nil); err != nil {
 		log.Fatal("ListenAndServe: ", err)
 	}
 }
