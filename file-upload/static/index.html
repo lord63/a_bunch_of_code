@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>FilePond from CDN</title>
+
+  <!-- Filepond stylesheet -->
+  <link href="https://unpkg.com/filepond/dist/filepond.css" rel="stylesheet">
+
+</head>
+<body>
+
+  <!-- We'll transform this input into a pond -->
+  <form action="/upload" method="POST" enctype="multipart/form-data">
+    <input type="file" name="filepond" class="filepond" data-filepond>
+  </form>
+
+  <!-- Load FilePond library -->
+  <script src="https://unpkg.com/filepond/dist/filepond.js"></script>
+
+  <!-- Turn all file input elements into ponds -->
+  <script>
+  FilePond.setOptions({
+  server: {
+    url: '/upload',
+    process: {
+      method: 'POST',
+      headers: {
+        'x-custom-header': 'value'
+      },
+      ondata: (formData) => {
+        // additional form data
+        formData.append('foo', 'bar');
+        return formData;
+      }
+    }
+  }
+});
+
+FilePond.create(document.querySelector('input[type="file"]'));
+  </script>
+</body>
+</html>
