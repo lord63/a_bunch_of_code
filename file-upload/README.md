@@ -1,6 +1,8 @@
 # File Upload Service
 
-A simple file upload service built with Go and [FilePond](https://pqina.nl/filepond/).
+A simple file upload service built with Go and [FilePond](https://pqina.nl/filepond/). A common use case is uplaod files to your server.
+
+![img](https://github.com/user-attachments/assets/f094eae9-e05d-40a7-b41a-33f70895d724)
 
 ## Features
 
