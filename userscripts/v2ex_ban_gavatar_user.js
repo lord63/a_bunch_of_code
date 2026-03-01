@@ -1,8 +1,8 @@
 // ==UserScript==
-// @name         V2EX 屏蔽默认头像帖子（含 TopicsHot）
+// @name         V2EX 屏蔽默认头像（主题列表 + TopicsHot + 回复）
 // @namespace    https://example.com/
-// @version      0.2.1
-// @description  屏蔽使用 gravatar 默认头像（/gravatar/）的条目：帖子列表 + TopicsHot（toplist）。支持“直接隐藏”或“显示占位”模式切换。
+// @version      0.4.0
+// @description  屏蔽使用 gravatar 默认头像（/gravatar/）的���目：主题列表、TopicsHot、以及主题正文回复。支持“直接隐藏”或“显示占位”模式切换。
 // @match        https://www.v2ex.com/*
 // @match        https://v2ex.com/*
 // @grant        GM_getValue
@@ -30,34 +30,50 @@
         return url.includes('cdn.v2ex.com/gravatar/') || url.includes('/gravatar/');
     }
 
-    function isTargetCell(cell) {
-        if (!(cell instanceof HTMLElement)) return false;
-        if (cell.matches('div.cell.item')) return true;
-        if (cell.matches('#TopicsHot .cell')) return true;
-        return false;
+    function detectCellKind(cell) {
+        // 返回 'topic' | 'reply' | null
+        if (!(cell instanceof HTMLElement)) return null;
+        if (!cell.matches('div.cell')) return null;
+        if (!cell.querySelector('img.avatar')) return null;
+
+        // 回复：你给的例子 id="r_17335973"
+        if (cell.id && cell.id.startsWith('r_')) return 'reply';
+
+        // ��题/热榜：存在指向 /t/ 的链接（topic-link / item_title / item_hot_topic_title 等）
+        const hasTopicLink =
+            cell.querySelector('a.topic-link') ||
+            cell.querySelector('.item_title a[href^="/t/"]') ||
+            cell.querySelector('.item_hot_topic_title a[href^="/t/"]') ||
+            cell.querySelector('a[href^="/t/"]'); // 兜底（在有 avatar 的前提下）
+
+        if (hasTopicLink) return 'topic';
+
+        return null;
     }
 
-    function buildPlaceholder(originalCell) {
+    function buildPlaceholder(originalCell, kind) {
         const ph = document.createElement('div');
         ph.className = (originalCell.className || 'cell') + ' tm-default-avatar-blocked';
         if (originalCell.getAttribute('style')) ph.setAttribute('style', originalCell.getAttribute('style'));
 
         const img = originalCell.querySelector('img.avatar');
-        const size = img?.getAttribute('width') || '24';
+        const size = img?.getAttribute('width') || '48';
+
+        const label = kind === 'reply' ? '已屏蔽一条回复（默认头像）' : '已屏蔽一条主题（默认头像）';
 
         ph.innerHTML = `
       <table cellpadding="0" cellspacing="0" border="0" width="100%">
         <tbody>
           <tr>
-            <td width="${size}" valign="middle" align="center">
+            <td width="${size}" valign="top" align="center">
               <div style="width:${size}px;height:${size}px;line-height:${size}px;text-align:center;border-radius:4px;background:#f2f2f2;color:#888;font-size:12px;">
                 隐藏
               </div>
             </td>
             <td width="10"></td>
-            <td width="auto" valign="middle" style="color:#666;">
+            <td width="auto" valign="top" align="left" style="color:#666;">
               <div style="font-size:13px; margin-bottom:4px;">
-                已屏蔽一条（默认头像）
+                ${label}
               </div>
               <div style="font-size:12px;">
                 <a href="javascript:void(0)" class="tm-unblock">点击展开</a>
@@ -79,15 +95,12 @@
 
     function processCell(cell, mode) {
         if (!cell || cell.dataset.tmProcessed === '1') return;
-        if (!isTargetCell(cell)) return;
+
+        const kind = detectCellKind(cell);
+        if (!kind) return;
 
         const avatarImg = cell.querySelector('img.avatar');
-        if (!avatarImg) {
-            cell.dataset.tmProcessed = '1';
-            return;
-        }
-
-        const url = avatarImg.currentSrc || avatarImg.src || '';
+        const url = avatarImg?.currentSrc || avatarImg?.src || '';
         if (!isDefaultAvatarUrl(url)) {
             cell.dataset.tmProcessed = '1';
             return;
@@ -100,7 +113,7 @@
         }
 
         if (mode === Mode.PLACEHOLDER) {
-            const ph = buildPlaceholder(cell);
+            const ph = buildPlaceholder(cell, kind);
             cell.dataset.tmProcessed = '1';
             cell.replaceWith(ph);
             return;
@@ -110,7 +123,7 @@
     }
 
     function scanAndProcess(mode) {
-        const cells = document.querySelectorAll('div.cell.item, #TopicsHot .cell');
+        const cells = document.querySelectorAll('div.cell');
         for (const cell of cells) processCell(cell, mode);
     }
 
@@ -131,12 +144,9 @@
                 for (const node of m.addedNodes) {
                     if (!(node instanceof HTMLElement)) continue;
 
-                    if (node.matches?.('div.cell.item, #TopicsHot .cell')) {
-                        processCell(node, mode);
-                        continue;
-                    }
+                    if (node.matches?.('div.cell')) processCell(node, mode);
 
-                    const cells = node.querySelectorAll?.('div.cell.item, #TopicsHot .cell');
+                    const cells = node.querySelectorAll?.('div.cell');
                     if (cells?.length) for (const cell of cells) processCell(cell, mode);
                 }
             }
